@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Header from '../Header';
 import Destaques from '../Destaques';
 import Footer from '../Footer';
@@ -12,19 +11,6 @@ import laLiga from '../../images/MainPage/laLiga.png';
 import serieA from '../../images/MainPage/serieA.png';
 
 function Home() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/data') // Rota modificada no backend
-      .then(response => {
-        setData(response.data.number); // Armazena o número recebido na state 'data'
-      })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
-      });
-  }, []);
-
-
 
   function importAll(r) {
     let images = {};
@@ -81,11 +67,8 @@ function Home() {
           <Destaques bannerURL={ligaPortuguesa} tShirt={portugal} nomeLiga="Primeira Liga"/>
           <Destaques bannerURL={premierLeague} tShirt={premier} nomeLiga="Premier League"/>
           <Destaques bannerURL={laLiga} tShirt={laLigaEs} nomeLiga="La Liga"/>
-          <Destaques bannerURL={serieA} tShirt={serieAIt} nomeLiga="Série A Itália"/>
+          <Destaques bannerURL={serieA} tShirt={serieAIt} nomeLiga="Serie A Itália"/>
         </div>
-
-        <h1>Number from Server:</h1>
-        {data !== null ? <p>{data}</p> : <p>Loading...</p>}
       </div>
       <Footer/>
     </div>

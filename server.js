@@ -26,15 +26,6 @@ app.get('/api/images/:league/', async (req, res) => {
   }
 });
 
-app.get('/data', (req, res) => {
-  const randomNumber = Math.floor(Math.random() * 100);
-  res.json({ number: randomNumber });
-});
-
-app.get('/', (req, res) => {
-  res.send("Right");
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -29,6 +29,16 @@ body {
     text-decoration: none;
 }
 
+/* Liga.jsx */
+.ligaPage {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.filterButton {
+    border: none;
+    background: none;
+}
+
 /* Header.jsx */
 
 .navHeader {
