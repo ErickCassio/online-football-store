@@ -12,6 +12,8 @@ import serieA from '../../images/MainPage/serieA.png';
 
 function Home() {
 
+  //const history = useHistory();
+
   function importAll(r) {
     let images = {};
     if (r.keys().length > 0) {

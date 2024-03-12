@@ -11,7 +11,7 @@ function Destaques(props) {
         </div>
           <div className="row">
               {Object.keys(props.tShirt).map((imagem, index) => (
-                <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0'>
+                <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0' key={index}>
                   <Camisas key={index} imgSrc={props.tShirt[imagem]} altText={imagem} />
                 </div>
               ))}

@@ -58,11 +58,11 @@ function Dropdown(){
                     </div>
                 
                     <div className='col-12 p-2 px-3 produtos'>
-                        <Link to="/" className="linkSemEstilo"><h6 className='m-0'><i class="fa-solid fa-house"></i> Página inicial</h6></Link>
+                        <Link to="/" className="linkSemEstilo"><h6 className='m-0'><i className="fa-solid fa-house"></i> Página inicial</h6></Link>
                     </div>
                     <hr className='m-0'/>
                     <div className='col-12 p-2 px-3 d-flex justify-content-between produtos' onClick={handleMenu}>
-                        <h6 className='m-0'><i class="fa-solid fa-shirt"></i> Produtos</h6>
+                        <h6 className='m-0'><i className="fa-solid fa-shirt"></i> Produtos</h6>
                         <i className="fa-solid fa-angle-down mt-1"></i>
                     </div>
                     <hr className='m-0'/>

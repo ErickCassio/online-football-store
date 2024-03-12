@@ -29,6 +29,11 @@ body {
     text-decoration: none;
 }
 
+/* SearchResults.jsx */
+.searchPage {
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Liga.jsx */
 .ligaPage {
     font-family: 'Montserrat', sans-serif;
@@ -67,6 +72,15 @@ body {
     font-size: 1.5rem;
     padding-left: 2vw;
     padding-right: 0.5vw;
+}
+
+.searchInput {
+    border-radius: 1em;
+    border: none;
+}
+
+.searchInput:focus {
+    outline: none; /* Remove a borda ao clicar */
 }
 
 /* Dropdown.jsx */
@@ -204,13 +218,10 @@ body {
 .camisa h6:first-of-type {
     font-size: calc(0.7em + 0.5vw);
     font-weight: 400;
-  /* Tamanho mínimo: 16 pixels
-     Tamanho preferido: 4% da largura da viewport
-     Tamanho máximo: 24 pixels */
 }
 
 .camisa p:nth-of-type(1) {
-    font-size: calc(0.6em + 0.3vw); /* ou outro valor fixo */
+    font-size: calc(0.6em + 0.3vw);
 }
 
 /*Footer*/
