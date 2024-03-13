@@ -13,24 +13,28 @@ function SearchResults() {
     url: [],
     name: []
   });
+  //Defines the search state, 0 if is searching, 1 if finds something, 2 if nothing was found
+  const [pageState, setPageState] = useState(0);
+
   const [searchParams] = useSearchParams();
   const search = decodeURIComponent(searchParams.get('input'));
   
   
   useEffect(() => {
+    setPageState(0);
     const fetchImagesAndFilterProducts = async () => {
       try {
-        const productUrlMap = {}; // Objeto para armazenar as URLs de imagem por chave de produto
+        const productUrlMap = {};
     
-        // Obter URLs de imagem para cada chave de produto
+        // Get Image Url for each product key
         await Promise.all(Object.keys(products).map(async (key) => {
           try {
             const response = await axios.get(`http://localhost:5000/api/images/${key}`);
             const images = key === 'Brasileirão' ? response.data.slice(1) : response.data;
-            productUrlMap[key] = images; // Armazenar URLs de imagem para esta chave de produto
+            productUrlMap[key] = images; // Store Image Urls to this products key
           } catch (error) {
             console.error(`Erro ao obter imagens para a chave ${key}:`, error);
-            productUrlMap[key] = []; // Definir array vazio em caso de erro
+            productUrlMap[key] = []; // Defines a empty array in error cases
           }
         }));
     
@@ -44,16 +48,18 @@ function SearchResults() {
           );
     
           if (results.length > 0) {
+            //If results isn't empty, then we get the product name and the corresponding product url
             productNameAux.push(results);
             results.forEach((result) => {
               const index = products[key].indexOf(result);
-              productUrl.push(productUrlMap[key][index]); // Obter URL correspondente usando a chave de produto
+              productUrl.push(productUrlMap[key][index]);
             });
           }
         });
         const productNameFlat = productNameAux.flat();
-        // Quando todos os produtos foram verificados e todas as imagens foram buscadas
+        // When all the products where found and the corresponding url for each product
         setFinalResult({ name: productNameFlat, url: productUrl });
+        setPageState(productNameFlat.length > 0 ? 1 : 2);
       } catch (error) {
         console.error('Erro ao buscar imagens e filtrar produtos:', error);
       }
@@ -95,24 +101,30 @@ function SearchResults() {
     <div>
       <Header/>
       <div className='container searchPage'>
-      <div className='row m-3 d-flex justify-content-between'>
-        <div className='col-12 col-md-6 col-lg-6 col-sm-6'>
-          <h2>Resultados para <b>{"\"" + search + "\""}</b></h2>
+        <div className='row m-3 d-flex justify-content-between'>
+          <div className='col-12 col-md-6 col-lg-6 col-sm-6'>
+            <h2>Resultados para <b>{"\"" + search + "\""}</b></h2>
+          </div>
+          {/* If pageState is 0 then the page is loading */}
+          {(pageState === 0) ? 
+          (<div>
+              <h4 className='p-5'>Buscando, aguarde um momento</h4>
+              <div style={{height:"50vh"}}></div>
+          </div>) : 
+          (pageState === 1 ?
+            (<div> {/* if pageState is 1 then the product was found, and we render then */}
+              <div className='col-12 col-md-6 col-lg-6 col-sm-6 d-flex justify-content-between py-2'> 
+                <p className='mb-0'>Exibindo {((currentPage * imagesPerPage > finalResult.url.length) ? finalResult.url.length : currentPage * imagesPerPage)} - {finalResult.url.length} produtos</p>
+              </div>
+              <div className='row text-center'>
+                {renderImages()}
+              </div>
+            </div>) : 
+            <div> {/* if pageState is 2 then no one product was found */}
+              <h4 className='p-5'>Nenhum produto encontrado, tente buscar por outros produtos</h4>
+              <div style={{height:"50vh"}}></div>
+            </div>)}
         </div>
-        {finalResult.url.length > 0 ? 
-        <div className='col-12 col-md-6 col-lg-6 col-sm-6 d-flex justify-content-between py-2'>
-          <p className='mb-0'>Exibindo {((currentPage * imagesPerPage > finalResult.url.length) ? finalResult.url.length : currentPage * imagesPerPage)} - {finalResult.url.length} produtos</p>
-        </div> : null}
-      </div>
-      <div className='row text-center'>
-        {finalResult.url.length > 0 ?
-        (renderImages()): 
-        (<div>
-            <h4 className='p-5'>Nenhum produto encontrado, tente buscar por outros produtos</h4>
-            <div style={{height:"50vh"}}></div>
-        </div>)}
-      </div>
-        
       </div>
       <Footer/>
     </div>
