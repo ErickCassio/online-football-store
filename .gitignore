@@ -127,5 +127,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 eminent-citadel-414312-847a16520c35.json
-
+utilitarian-bee-424721-e4-9a15157c5f48.json
 start-project.sh
+orderfiles.js
+listfiles.js
+processfiles.js

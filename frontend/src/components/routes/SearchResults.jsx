@@ -4,6 +4,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import products from '../../products/products.json';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const imagesPerPage = 20;
 
@@ -19,6 +20,7 @@ function SearchResults() {
   const [searchParams] = useSearchParams();
   const search = decodeURIComponent(searchParams.get('input'));
   
+  const navigate = useNavigate();
   
   useEffect(() => {
     setPageState(0);
@@ -37,7 +39,7 @@ function SearchResults() {
             productUrlMap[key] = []; // Defines a empty array in error cases
           }
         }));
-    
+        console.log("entrei aqui");
         const productNameAux = [];
         const productUrl = [];
     
@@ -82,11 +84,17 @@ function SearchResults() {
     setCurrentPage(prevPage => prevPage + 1);
   };
 
+  const handleProductClick = (index) => {
+    const encodedProductURL = encodeURIComponent(finalResult.url[index]);
+    // Navigate o search route
+    return navigate(`/product/${finalResult.name[index]}/?input=${encodedProductURL}`);
+  }
+
   const renderImages = () => {
     let endIndex = currentPage * imagesPerPage;
     if(endIndex > finalResult.url.length) {endIndex = finalResult.url.length}
     return finalResult.url.slice(0, endIndex).map((url, index) => (
-      <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0 mb-3' key={index}>
+      <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0 mb-3' key={index} onClick={() => handleProductClick(index)}>
         <div className='camisa m-3'>
           <img className='img-fluid camisaImg' src={url} alt={`Imagem ${index}`} loading="lazy" />
           <hr className="linha mt-0 mb-2" />

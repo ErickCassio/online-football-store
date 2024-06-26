@@ -1,6 +1,6 @@
 // Liga.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
 import Filter from '../Filter';
@@ -26,6 +26,7 @@ function Liga() {
   });
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getImagens();
@@ -35,7 +36,7 @@ function Liga() {
   }, [liga]); // Atualize sempre que a liga mudar
 
   if (!ligasValidas.includes(liga)) {
-    return <Navigate to="/pagina-nao-encontrada" />; //Se a liga não for encontrada o usuário será mandado para cá
+    return <Navigate to="/page-not-found" />; //Se a liga não for encontrada o usuário será mandado para cá
   }
 
   const handleScroll = () => {
@@ -60,12 +61,17 @@ function Liga() {
     setCurrentPage(prevPage => prevPage + 1);
   };
 
+  const handleProductClick = (url, name) => {
+    const encodedProductURL = encodeURIComponent(url);
+    return navigate(`/product/${name}/?input=${encodedProductURL}`);
+  }
+
   const renderImages = () => {
     let endIndex = currentPage * imagesPerPage;
     if(endIndex > productInfo.url.length) {endIndex = productInfo.url.length}
     return productInfo.url.slice(0, endIndex).map((url, index) => (
       <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0 mb-3' key={index}>
-        <div className='camisa m-3'>
+        <div className='camisa m-3' onClick={() => {handleProductClick(url, productInfo.name[index])}}>
           <img className='img-fluid camisaImg' src={url} alt={`Imagem ${index}`} loading="lazy" />
           <hr className="linha mt-0 mb-2" />
           <h6>{productInfo.name[index]}</h6>
@@ -80,7 +86,7 @@ function Liga() {
     if(endIndex > filteredProducts.length) {endIndex = filteredProducts.length}
     return filteredProducts.slice(0, endIndex).map((item, index) => (
       <div className='col-lg-3 col-md-4 col-sm-4 col-6 p-0 mb-3' key={index}>
-        <div className='camisa m-3'>
+        <div className='camisa m-3' onClick={() => {handleProductClick(item.url, item.name)}}>
           <img className='img-fluid camisaImg' src={item.url} alt={`Imagem ${index}`} loading="lazy" />
           <hr className="linha mt-0 mb-2" />
           <h6>{item.name}</h6>

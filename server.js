@@ -11,10 +11,10 @@ const storage = new Storage();
 app.use(cors());
 
 app.get('/api/images/:league/', async (req, res) => {
-  const { league, team } = req.params;
-  const bucketName = 'zzfutebolstore';
-  const prefix = `images/Camisas/${league}/`;
-
+  const { league } = req.params;
+  const bucketName = 'zzfutebolstores';
+  const prefix = `Camisas/${league}/`;
+  
   try {
     const [files] = await storage.bucket(bucketName).getFiles({ prefix });
     console.log("Files: ", files);

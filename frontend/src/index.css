@@ -14,6 +14,17 @@ body {
     padding: 0;
 }
 
+.modal-body {
+    max-height: 60dvh;
+    overflow: overlay;
+}
+
+input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .divisao {
     height: 70px;
 }
@@ -27,6 +38,90 @@ body {
 .linkSemEstilo {
     color: inherit;
     text-decoration: none;
+    user-select: none; /* Standard */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+/*Product.jsx*/
+.productImage {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 100px;
+}
+
+.productPage {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.productButton {
+    background-color: white;
+    border-color: black;
+    border-width: 0.07em;
+}
+
+.clicked {
+    background-color: black;
+    color: white;
+}
+
+#selectOption {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.quantity-input {
+    border-left: none;
+    border-right: none;
+    border-color: black;
+    width: 2em;
+    height: 3em;
+}
+
+.quantity-button {
+    background-color: white;
+    border-color: black;
+    width: 2em;
+    font-size: 1.7em;
+}
+
+.quantity-button:first-child {
+    border-right: none;
+}
+
+.quantity-button:nth-of-type(2) {
+    border-left: none;
+}
+
+.add-to-cart-button {
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 0.5em;
+    width: 100%;
+}
+
+.measures svg {
+    max-height: 30px;
+    max-width: 30px;
+    cursor: pointer;
+}
+
+.measures p {
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.measuresTable h4 {
+    cursor: pointer;
+    user-select: none; /* Standard */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 /* SearchResults.jsx */

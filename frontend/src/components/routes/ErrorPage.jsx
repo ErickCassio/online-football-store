@@ -1,8 +1,7 @@
-// PaginaNaoEncontrada.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const PaginaNaoEncontrada = () => {
+const ErrorPage = () => {
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Ops! Página não encontrada</h1>
@@ -31,4 +30,4 @@ const styles = {
   }
 };
 
-export default PaginaNaoEncontrada;
+export default ErrorPage;
