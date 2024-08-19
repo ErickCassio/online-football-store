@@ -2,29 +2,25 @@ import React, { useState, useEffect } from 'react';
 import teams from '../products/teams.json';
 
 const Filter = (props) => {
-    const types = ["Kit Infantil", "Bobojaco", "Baby Body", "Corta Vento", "Manga Longa", "Retrô", "Shorts", "Versão Feminina", "Versão Jogador", "Versão Torcedor"];
+    const types = ["Kit Infantil", "Bobojaco", "Baby Body", "Corta Vento", "Manga Longa", "Retrô", "Retrô Manga Longa", "Shorts", "Versão Feminina", "Versão Jogador", "Versão Torcedor"];
   
     useEffect(() => {
       if (props.selectedTypes.length > 0 || props.selectedTeams.length > 0) {
-        const filteredProducts = props.originalProducts.name.reduce((filtered, name, index) => {
-          const product = { name, url: props.originalProducts.url[index] };
+        const filteredProducts = props.originalProducts.filter(product => {
           // Verifica se o produto atende aos critérios de equipe selecionados, se houver
-          const teamFilter = props.selectedTeams.length === 0 || props.selectedTeams.some(team => name.includes(team));
+          const teamFilter = props.selectedTeams.length === 0 || props.selectedTeams.includes(product.team);
           // Verifica se o produto atende aos critérios de tipo selecionados, se houver
-          const typeFilter = props.selectedTypes.length === 0 || props.selectedTypes.some(type => name.includes(type));
-          // Se o produto atender aos critérios de equipe e tipo, adiciona-o ao array filtrado
-          if (teamFilter && typeFilter) {
-            filtered.push(product);
-          }
-          return filtered;
-        }, []);
+          const typeFilter = props.selectedTypes.length === 0 || props.selectedTypes.includes(product.type);
+          // Retorna verdadeiro se o produto atender aos critérios de equipe e tipo
+          return teamFilter && typeFilter;
+        });
         props.onFilterChange(filteredProducts);
         props.onFilterStateChange(true);
-      }
-      else if (props.selectedTypes.length === 0 && props.selectedTeams.length === 0) {
+      } else {
+        props.onFilterChange(props.originalProducts); // Se nenhum filtro estiver selecionado, mostra todos os produtos originais
         props.onFilterStateChange(false);
       }
-    }, [props.selectedTypes, props.selectedTeams]); // Atualize sempre que os filtros mudarem
+    }, [props.selectedTypes, props.selectedTeams, props.originalProducts]);    
   
     const handleTeamFilter = (teamName) => {
       if (props.selectedTeams.includes(teamName)) {
