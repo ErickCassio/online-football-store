@@ -4,7 +4,7 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
 import Filter from "../Filter";
-import axios from "axios";
+import api from "../../utils/api";
 
 const ligasValidas = [
   "Brasileirão",
@@ -74,9 +74,7 @@ function Liga() {
 
   const getImagens = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/images/${liga}`
-      );
+      const response = await api.get(`/images/${liga}`);
       const sortedProducts = response.data.sort((a, b) =>
         a.name.localeCompare(b.name, undefined, {
           numeric: true,

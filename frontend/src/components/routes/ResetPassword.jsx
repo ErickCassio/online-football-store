@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../utils/api";
 
 function ResetPassword() {
   const [canReset, setCanReset] = useState(false);
@@ -21,9 +21,7 @@ function ResetPassword() {
     const verifyToken = async () => {
       try {
         // Send a request to verify if the token is valid
-        const response = await axios.post(
-          `http://localhost:5000/api/verifyToken/${token}`
-        );
+        const response = await api.post(`/verifyToken/${token}`);
         //The user can change their password
         setCanReset(true);
         setLoading(false);
@@ -74,10 +72,9 @@ function ResetPassword() {
       setErrors("");
       try {
         // Send a request to reset the user password
-        const response = await axios.post(
-          `http://localhost:5000/api/resetPassword/${token}`,
-          { password: userData.password }
-        );
+        const response = await api.post(`/resetPassword/${token}`, {
+          password: userData.password,
+        });
         setSucess("Senha alterada com sucesso");
         setButtonDisabled(true);
       } catch (err) {

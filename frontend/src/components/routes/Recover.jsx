@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../utils/api";
 
 function Login() {
   const [userMail, setUserMail] = useState("");
@@ -27,10 +27,9 @@ function Login() {
     if (!hasErrors) {
       setErrors("");
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/requestPasswordReset",
-          { email: userMail }
-        );
+        const response = await api.post("/requestPasswordReset", {
+          email: userMail,
+        });
         setSucess("E-mail enviado! Verifique sua caixa de entrada ou spam");
         setButtonDisabled(true);
       } catch (err) {

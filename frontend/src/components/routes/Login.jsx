@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../utils/api";
 
 function Login() {
   const [userData, setUserData] = useState({
@@ -39,10 +39,7 @@ function Login() {
     if (!hasErrors) {
       setLoading(true);
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/login",
-          userData
-        );
+        const response = await api.post("/login", userData);
         // Store the token on the user desktop
         localStorage.setItem("token", response.data.token);
         setLoading(false);
@@ -72,10 +69,9 @@ function Login() {
 
   const handleEmailSend = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/reAuthUser",
-        { email: userData.email }
-      );
+      const response = await api.post("/reAuthUser", {
+        email: userData.email,
+      });
       setEmailSended("Email enviado! Verifique sua caixa de entrada!");
     } catch (err) {
       if (err.response) {

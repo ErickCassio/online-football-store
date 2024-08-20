@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
-import axios from "axios";
+import api from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 
 const imagesPerPage = 20;
@@ -22,9 +22,7 @@ function SearchResults() {
     setPageState(0);
     const searchProducts = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/search/${search}`
-        );
+        const response = await api.get(`/search/${search}`);
         const sortedProducts = response.data.sort((a, b) =>
           a.name.localeCompare(b.name, undefined, {
             numeric: true,

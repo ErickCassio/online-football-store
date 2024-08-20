@@ -8,7 +8,7 @@ import {
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
-import axios from "axios";
+import api from "../../utils/api";
 import { jwtDecode } from "jwt-decode";
 
 const Cart = () => {
@@ -68,8 +68,8 @@ const Cart = () => {
             auxCountState[i] = true;
             setDecreaseCountState(auxCountState);
           }
-          const response = await axios.get(
-            `http://localhost:5000/api/searchById/${tempCartItems[i].productId}`
+          const response = await api.get(
+            `/searchById/${tempCartItems[i].productId}`
           );
           if (response.data.length > 0) {
             const { id, ...productData } = response.data[0];
@@ -107,9 +107,7 @@ const Cart = () => {
 
   const fetchCartFromBackend = async (token) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/cart/${token}`
-      );
+      const response = await api.get(`/cart/${token}`);
       const backendCartItems = response.data
         .map((item) => {
           const renamedItem = renameProperties(item);
@@ -135,9 +133,7 @@ const Cart = () => {
       try {
         const token = localStorage.getItem("token");
         const databaseItemId = cartItems[itemId].databaseItemId;
-        await axios.delete(
-          `http://localhost:5000/api/cart/${token}/item/${databaseItemId}`
-        );
+        await api.delete(`/cart/${token}/item/${databaseItemId}`);
         fetchCartFromBackend(token);
       } catch (error) {
         console.error("Error removing item from cart:", error);
@@ -155,12 +151,9 @@ const Cart = () => {
         const token = localStorage.getItem("token");
         const databaseItemId = cartItems[index].databaseItemId;
         const item = cartItems[index];
-        await axios.put(
-          `http://localhost:5000/api/cart/${token}/item/${databaseItemId}`,
-          {
-            quantity: item.quantity + 1,
-          }
-        );
+        await api.put(`/cart/${token}/item/${databaseItemId}`, {
+          quantity: item.quantity + 1,
+        });
         const updatedCartItems = [...cartItems];
 
         // Verifica se o índice é válido
@@ -188,12 +181,9 @@ const Cart = () => {
         const databaseItemId = cartItems[index].databaseItemId;
         const item = cartItems[index];
         if (item.quantity > 1) {
-          await axios.put(
-            `http://localhost:5000/api/cart/${token}/item/${databaseItemId}`,
-            {
-              quantity: item.quantity - 1,
-            }
-          );
+          await api.put(`/cart/${token}/item/${databaseItemId}`, {
+            quantity: item.quantity - 1,
+          });
           const updatedCartItems = [...cartItems];
 
           // Verifica se o índice é válido

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/api";
 import { useParams } from "react-router-dom";
 
 function Validate() {
@@ -10,9 +10,7 @@ function Validate() {
     const verifyEmail = async () => {
       try {
         // Faz a requisição para a API de validação de email
-        const response = await axios.get(
-          `http://localhost:5000/api/confirmacao/${token}`
-        );
+        const response = await api.get(`/confirmacao/${token}`);
 
         // Atualiza o estado com a mensagem de sucesso
         setStatus("success");

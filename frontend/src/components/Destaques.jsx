@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Camisas from "./Camisas.jsx";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";
 
 function Destaques(props) {
   const navigate = useNavigate();
@@ -11,9 +11,7 @@ function Destaques(props) {
     const collectProductInfo = async () => {
       let auxTShirt = [];
       for (let index = 0; index < props.tShirt.length; index++) {
-        const response = await axios.get(
-          `http://localhost:5000/api/searchById/${props.tShirt[index]}`
-        );
+        const response = await api.get(`/searchById/${props.tShirt[index]}`);
         if (response.data.length > 0) {
           auxTShirt.push(response.data);
         }

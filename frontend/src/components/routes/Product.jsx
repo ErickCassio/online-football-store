@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
-import axios from "axios";
+import api from "../../utils/api";
 import { jwtDecode } from "jwt-decode";
 import { addItemToCart } from "../../utils/storage";
 
@@ -57,9 +57,7 @@ function Product() {
 
     const searchProducts = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/searchById/${productId}`
-        );
+        const response = await api.get(`/searchById/${productId}`);
         //Look for the product ID on Database
         if (response.data.length > 0) {
           //If found the product, set the product info
@@ -190,10 +188,7 @@ function Product() {
         };
         const addToCart = async () => {
           try {
-            const response = await axios.post(
-              `http://localhost:5000/api/cart/${token}`,
-              allProductInfo
-            );
+            const response = await api.post(`/cart/${token}`, allProductInfo);
           } catch (error) {
             console.error(
               "Erro ao adicionar item ao carrinho:",

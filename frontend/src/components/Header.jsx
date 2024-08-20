@@ -3,7 +3,7 @@ import storeLogo from "../images/MainPage/storeLogo2.png";
 import OffCanvas from "./OffCanvas";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+import api from "../utils/api";
 
 //import SearchIcon from '@mui/icons-material/Search';
 //import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -29,9 +29,7 @@ function Header() {
           } else {
             //Valid token, catchs user information
             try {
-              const response = await axios.get(
-                `http://localhost:5000/api/userData/${token}`
-              );
+              const response = await api.get(`/userData/${token}`);
               setUserNickname(response.data.nickname);
             } catch (error) {
               localStorage.removeItem("token");

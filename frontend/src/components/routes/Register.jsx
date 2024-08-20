@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
-import axios from "axios";
+import api from "../../utils/api";
 
 function Register() {
   const [userData, setUserData] = useState({
@@ -83,10 +83,7 @@ function Register() {
 
     if (!hasErrors) {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/register",
-          userData
-        );
+        const response = await api.post("/register", userData);
 
         // Define a mensagem de sucesso e limpa mensagens de erro
         setSuccessMessage("Cadastro realizado com sucesso!");
