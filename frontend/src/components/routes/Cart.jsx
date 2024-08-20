@@ -216,7 +216,7 @@ const Cart = () => {
   const formatCartItems = () => {
     let message = "Olá, gostaria de comprar os seguintes produtos:\n\n";
     cartItems.forEach((item) => {
-      message += `http://localhost:3000/product/${item.productId}
+      message += `https://online-football-store.vercel.app/product/${item.productId}
 *${item.name}*
 Quantidade: ${item.quantity}
 Tamanho: ${item.size}\n`;
@@ -257,7 +257,7 @@ Tamanho: ${item.size}\n`;
   };
 
   const sendWhatsAppMessage = () => {
-    const phoneNumber = "+351963089568"; // Substitua pelo número de telefone
+    const phoneNumber = "+351935165523"; // Substitua pelo número de telefone
     const message = formatCartItems();
     const url = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(url, "_blank");
