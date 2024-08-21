@@ -25,9 +25,9 @@ const client = new Client({
 const storage = new Storage();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false, // true for 465, false for other ports
+  host: "smtp-relay.brevo.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER, // seu email do Outlook
     pass: process.env.EMAIL_PASS, // sua senha do Outlook
@@ -35,15 +35,16 @@ const transporter = nodemailer.createTransport({
 });
 // Função para enviar o email de verificação
 function enviarEmailVerificacao(emailUsuario, nickname, tokenVerificacao) {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: emailUsuario,
-    subject: "Confirmação de Email",
-    text: `Olá, ${nickname}!
+  return new Promise((resolve, reject) => {
+    const mailOptions = {
+      from: process.env.EMAIL_SENDER,
+      to: emailUsuario,
+      subject: "Confirmação de Email",
+      text: `Olá, ${nickname}!
 
       Sua conta na ZZFutebolStore está quase pronta. Para ativá-la, por favor confirme o seu endereço de email clicando no link abaixo.
 
-      Confirmar Email: http://localhost:3000/confirmacao/${tokenVerificacao}.
+      Confirmar Email: ${process.env.PAGE_URL}confirmacao/${tokenVerificacao}.
 
       Sua conta não será ativada até que seu email seja confirmado.
 
@@ -52,7 +53,7 @@ function enviarEmailVerificacao(emailUsuario, nickname, tokenVerificacao) {
       Desde já agradecemos pela preferência,
 
       ZZFutebolStore`,
-    html: `
+      html: `
       <!DOCTYPE html>
       <html lang="pt-BR">
       <head>
@@ -123,26 +124,27 @@ function enviarEmailVerificacao(emailUsuario, nickname, tokenVerificacao) {
               <div class="content">
                   <p>Olá, ${nickname}!</p>
                   <p>Sua conta na ZZFutebolStore está quase pronta. Para ativá-la, por favor confirme o seu endereço de email clicando no link abaixo.</p>
-                  <a href="http://localhost:3000/confirmacao/${tokenVerificacao}" class="button">Confirmar meu email</a>
+                  <a href="${process.env.PAGE_URL}confirmacao/${tokenVerificacao}" class="button">Confirmar meu email</a>
               </div>
               <div class="footer">
                   <p>Caso o link acima não funcione, copie e cole este endereço no seu navegador:</p>
-                  <p class="link">http://localhost:3000/confirmacao/${tokenVerificacao}</p>
+                  <p class="link">${process.env.PAGE_URL}confirmacao/${tokenVerificacao}</p>
                   <p>Se você não se cadastrou nesse site, ignore este email.</p>
               </div>
           </div>
       </body>
       </html>`,
-  };
+    };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.error("Erro ao enviar email de verificação:", error);
-      reject(error); // Rejeita a promessa com o erro
-    } else {
-      console.log("Email de verificação enviado para:", emailUsuario);
-      resolve(info); // Resolve a promessa com as informações do email
-    }
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.error("Erro ao enviar email de verificação:", error);
+        reject(error); // Rejeita a promessa com o erro
+      } else {
+        console.log("Email de verificação enviado para:", emailUsuario);
+        resolve(info); // Resolve a promessa com as informações do email
+      }
+    });
   });
 }
 
@@ -464,7 +466,7 @@ app.post("/api/requestPasswordReset", async (req, res) => {
 
     // Envia o e-mail com o link de recuperação
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.EMAIL_SENDER,
       to: email,
       subject: "Recuperação de Senha",
       html: `<!DOCTYPE html>
@@ -537,11 +539,11 @@ app.post("/api/requestPasswordReset", async (req, res) => {
               <div class="content">
                   <p>Olá, ${userNickName}!</p>
                   <p>Para alterar sua senha prossiga para nosso site através do botão abaixo.</p>
-                  <a href="http://localhost:3000/resetPassword/${token}" class="button">Redefinir a senha</a>
+                  <a href="${process.env.PAGE_URL}resetPassword/${token}" class="button">Redefinir a senha</a>
               </div>
               <div class="footer">
                   <p>Caso o botão acima não funcione, copie e cole este endereço no seu navegador:</p>
-                  <p class="link">http://localhost:3000/resetPassword/${token}</p>
+                  <p class="link">${process.env.PAGE_URL}resetPassword/${token}</p>
                   <p>Se você não se cadastrou nesse site, ignore este email.</p>
               </div>
           </div>
