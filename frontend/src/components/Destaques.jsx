@@ -26,10 +26,6 @@ function Destaques(props) {
     collectProductInfo();
   }, [props.tShirt]);
 
-  useEffect(() => {
-    console.log("Teste: " + tShirt);
-  }, [tShirt]);
-
   const handleShowMore = () => {
     if (props.nomeLiga.length > 0) {
       navigate(`/collections/${props.nomeLiga}`);

@@ -95,7 +95,7 @@ function Register() {
           const errorResponse = err.response.data;
           if (
             errorResponse.error ===
-            "Email já cadastrado. Prossiga para página de login."
+            "Email já cadastrado. Por favor, escolha outro."
           ) {
             setErrorMessage(errorResponse.error);
           } else {
