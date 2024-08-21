@@ -9,15 +9,20 @@ function Destaques(props) {
 
   useEffect(() => {
     const collectProductInfo = async () => {
-      let auxTShirt = [];
-      for (let index = 0; index < props.tShirt.length; index++) {
-        const response = await api.get(`/searchById/${props.tShirt[index]}`);
-        if (response.data.length > 0) {
-          auxTShirt.push(response.data);
+      try {
+        let auxTShirt = [];
+        for (let index = 0; index < props.tShirt.length; index++) {
+          const response = await api.get(`/searchById/${props.tShirt[index]}`);
+          if (response.data.length > 0) {
+            auxTShirt.push(response.data);
+          }
         }
+        setTShirt(auxTShirt);
+      } catch (error) {
+        console.error("Erro ao coletar informações dos produtos:", error);
       }
-      setTShirt(auxTShirt);
     };
+
     collectProductInfo();
   }, [props.tShirt]);
 

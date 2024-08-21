@@ -161,6 +161,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .imgLogo {
   width: 3em;
   height: 3em;
+  user-select: none;
 }
 
 .navButton {
@@ -294,6 +295,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /*Destaques.jsx CSS*/
 .destaques {
   margin-top: 2.5em;
+  user-select: none;
 }
 
 .destaques img:first-of-type {
@@ -358,6 +360,26 @@ input[type="number"]::-webkit-outer-spin-button {
 .footer a {
   color: #d3d3d3 !important; /* Define a cor do texto como transparente */
   text-decoration: none !important; /* Remove a decoração do texto (como sublinhado) */
+}
+
+.whatsapp-fly-button {
+  position: fixed;
+  z-index: 1000;
+  cursor: pointer;
+  bottom: 20px; /* Distância da parte inferior da página */
+  right: 20px; /* Distância do lado direito da página */
+  width: 3em;
+  height: 3em;
+  border-radius: 3em;
+  background-color: #00e884;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Sombra projetada para baixo e para a direita */
+  user-select: none;
+}
+
+.whatsapp-fly-button i {
+  color: white;
+  background-color: transparent;
+  font-size: 30px;
 }
 
 /* Cart.jsx */
