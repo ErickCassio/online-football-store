@@ -216,7 +216,7 @@ const Cart = () => {
   const formatCartItems = () => {
     let message = "Olá, gostaria de comprar os seguintes produtos:\n\n";
     cartItems.forEach((item) => {
-      message += `https://online-football-store.vercel.app/product/${item.productId}
+      message += `https://zzfutebolstore.com/product/${item.productId}
 *${item.name}*
 Quantidade: ${item.quantity}
 Tamanho: ${item.size}\n`;
