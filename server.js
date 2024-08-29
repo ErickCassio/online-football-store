@@ -151,6 +151,7 @@ function enviarEmailVerificacao(emailUsuario, nickname, tokenVerificacao) {
 // Configuração do CORS para permitir apenas o domínio do frontend
 const corsOptions = {
   origin: [
+    "https://zzfutebolstore.com",
     "https://online-football-store.vercel.app",
     "https://online-football-store-erickcassios-projects.vercel.app",
     "https://online-football-store-git-main-erickcassios-projects.vercel.app",
