@@ -8,7 +8,8 @@ function Banner(props) {
       <div className="banner-content">
         <h3 className="p-2 fw-semibold">Bem vindo à nossa loja!</h3>
         <h5>
-          Caso não encontre o produto que procura entre em contato conosco
+          Caso não encontre o produto que procura entre em contato conosco pelo
+          whatsapp
         </h5>
       </div>
     </div>
